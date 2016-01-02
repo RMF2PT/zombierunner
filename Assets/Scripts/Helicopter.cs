@@ -9,7 +9,12 @@ public class Helicopter : MonoBehaviour {
 	private AudioSource audioSource;
 
 	void Start () {
-		audioSource = GetComponent<AudioSource>();
+		AudioSource[] audioSources = GetComponents<AudioSource>();
+		foreach (AudioSource audioS in audioSources) {
+			if (audioS.priority == 1) {
+				audioSource = GetComponent<AudioSource>();
+			}
+		}
 	}
 	
 	// Update is called once per frame
