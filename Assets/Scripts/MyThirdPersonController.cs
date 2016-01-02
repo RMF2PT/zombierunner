@@ -3,7 +3,11 @@ using System.Collections;
  
 public class MyThirdPersonController : MonoBehaviour {
  
+
+		public AudioClip[] zombieSounds;
+
         private Animator animatorZ1;
+        private AudioSource audioSource;
  
         float movingTurnSpeed = 360;
         float stationaryTurnSpeed = 180;
@@ -12,6 +16,11 @@ public class MyThirdPersonController : MonoBehaviour {
  
         void Start () {
                 animatorZ1 = GetComponent<Animator>();
+                audioSource = GetComponent<AudioSource>();
+        }
+
+        void Update () {
+        	PlaySounds ();
         }
  
         public void Move(Vector3 move) {
@@ -35,5 +44,22 @@ public class MyThirdPersonController : MonoBehaviour {
                         animatorZ1.SetBool ("isWalking", true);
                 }
  
+        }
+
+		private void PlaySounds() {
+            if (audioSource.isPlaying) {
+                return;
+            }
+
+            // pick & play a random sound from the array,
+            // excluding sound at index 0
+            int n = Random.Range(1, zombieSounds.Length);
+            audioSource.clip = zombieSounds[n];
+            audioSource.PlayOneShot(audioSource.clip);
+            // move picked sound to index 0 so it's not picked next time
+            zombieSounds[n] = zombieSounds[0];
+            zombieSounds[0] = audioSource.clip;
+
+
         }
 }
