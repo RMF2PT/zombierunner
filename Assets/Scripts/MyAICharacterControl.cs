@@ -9,7 +9,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
     {
         public NavMeshAgent agent { get; private set; }             // the navmesh agent required for the path finding
 		public MyThirdPersonController character { get; private set; } // the character we are controlling
-        public Transform target;                                    // target to aim for
+        public GameObject target;                                    // target to aim for
 
 
         private void Start()
@@ -18,6 +18,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             agent = GetComponentInChildren<NavMeshAgent>();
 			character = GetComponent<MyThirdPersonController>();
 
+			target = GameObject.FindGameObjectWithTag("Player");
+
 	        agent.updateRotation = false;
 	        agent.updatePosition = true;
         }
@@ -25,8 +27,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         private void Update()
         {
-            if (target != null)
-                agent.SetDestination(target.position);
+            if (target != null) {
+                agent.SetDestination(target.transform.position);
+            } else {
+				Debug.LogWarning("Couldn't find the player Tag");
+            }
 
             if (agent.remainingDistance > agent.stoppingDistance)
                 character.Move(agent.desiredVelocity);
@@ -35,10 +40,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         }
 
 
-        public void SetTarget(Transform target)
-        {
-            this.target = target;
-        }
+//        public void SetTarget(GameObject target)
+//        {
+//            this.target = target;
+//        }
     }
 }
 
