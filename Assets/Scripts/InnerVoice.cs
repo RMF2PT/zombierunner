@@ -5,6 +5,7 @@ public class InnerVoice : MonoBehaviour {
 
 	public AudioClip whatHappened;
 	public AudioClip goodLandingArea;
+	public AudioClip NotAGoodLandingArea;
 
 	private AudioSource audioSource;
 
@@ -14,11 +15,19 @@ public class InnerVoice : MonoBehaviour {
 		audioSource.Play ();
 	}
 
-	void OnFindClearArea () {
-		audioSource.clip = goodLandingArea;
-		audioSource.Play ();
+	void OnNotClearArea () {
+		if (!audioSource.isPlaying) {
+			audioSource.clip = NotAGoodLandingArea;
+			audioSource.Play ();
+		}
+	}
 
-		Invoke ("CallHeli", goodLandingArea.length + 1f);
+	void OnFindClearArea () {
+		if (!audioSource.isPlaying) {
+			audioSource.clip = goodLandingArea;
+			audioSource.Play ();
+			Invoke ("CallHeli", goodLandingArea.length + 1f);
+		}
 	}
 
 	void CallHeli () {

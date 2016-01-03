@@ -14,6 +14,10 @@ public class Player : MonoBehaviour {
 	}
 
 	void Update () {
+		if (Input.GetButton("CheckArea")) {
+			BroadcastMessage("OnCheckClearArea");
+		}
+
 		if (lastRespawnToggle != respawn) {
 			Respawn();
 			respawn = false;
