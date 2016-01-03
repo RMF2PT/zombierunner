@@ -11,10 +11,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		public MyThirdPersonController character { get; private set; } // the character we are controlling
         public GameObject target;                                    // target to aim for
 
-
         private void Start()
         {
-            // get the components on the object we need ( should not be null due to require component so no need to check )
+            // get the components on the object we need (should not be null due to require component so no need to check )
             agent = GetComponentInChildren<NavMeshAgent>();
 			character = GetComponent<MyThirdPersonController>();
 
@@ -23,7 +22,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 	        agent.updateRotation = false;
 	        agent.updatePosition = true;
         }
-
 
         private void Update()
         {
@@ -38,12 +36,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             else
                 character.Move(Vector3.zero);
         }
-
-
-//        public void SetTarget(GameObject target)
-//        {
-//            this.target = target;
-//        }
     }
 }
 

@@ -43,7 +43,6 @@ public class MyThirdPersonController : MonoBehaviour {
                 } else {
                         animatorZ1.SetBool ("isWalking", true);
                 }
- 
         }
 
 		private void PlaySounds() {
@@ -59,7 +58,5 @@ public class MyThirdPersonController : MonoBehaviour {
             // move picked sound to index 0 so it's not picked next time
             zombieSounds[n] = zombieSounds[0];
             zombieSounds[0] = audioSource.clip;
-
-
         }
 }
