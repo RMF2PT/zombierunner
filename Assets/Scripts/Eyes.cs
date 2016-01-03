@@ -11,8 +11,7 @@ public class Eyes : MonoBehaviour {
 		eyes = GetComponent<Camera>();
 		defaultFOV = eyes.fieldOfView;
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		if (Input.GetButton("Zoom")) {
 			eyes.fieldOfView = (defaultFOV / zoom);

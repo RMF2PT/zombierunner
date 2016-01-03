@@ -7,23 +7,20 @@ public class Helicopter : MonoBehaviour {
 
 	private bool called = false;
 	private AudioSource audioSource;
+	private Rigidbody rigiBody;
 
 	void Start () {
-		AudioSource[] audioSources = GetComponents<AudioSource>();
-		foreach (AudioSource audioS in audioSources) {
-			if (audioS.priority == 1) {
-				audioSource = GetComponent<AudioSource>();
-			}
-		}
+		audioSource = GetComponent<AudioSource>();
+		rigiBody = GetComponent<Rigidbody>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (Input.GetButtonDown ("CallHeli") && !called) {
+
+	public void Call () {
+		if (!called) {
 			called = true;
+			Debug.Log ("Helicopter called");
 			audioSource.clip = callSound;
 			audioSource.Play();
-			Debug.Log ("Helicopter called");
+			rigiBody.velocity = new Vector3(0, 0, -50f);
 		}
 	}
 }
