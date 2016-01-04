@@ -21,12 +21,14 @@ public class ClearArea : MonoBehaviour {
 	}
 
 	public void OnCheckClearArea () {
-		boxCollider.size = new Vector3(20, 20, 20);
-		boxCollider.center = new Vector3(0, 9.2f, 0);
+		boxCollider.size = new Vector3(20, 30, 30);
+		boxCollider.center = new Vector3(0, 15, 0);
 
 		if (timeSinceLastTrigger > 3f && Time.realtimeSinceStartup > 10f && !foundClearArea) {
 			SendMessageUpwards ("OnFindClearArea");
 			foundClearArea = true;
+			boxCollider.size = initialSize;
+			boxCollider.center = initialCenter;
 		} else {
 			SendMessageUpwards ("OnNotClearArea");
 			boxCollider.size = initialSize;

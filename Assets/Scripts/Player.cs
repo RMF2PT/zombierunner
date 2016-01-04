@@ -4,6 +4,7 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	public Transform playerSpawnPoints; // parent of player spawn points
+	public GameObject landingAreaPrefab;
 
 	private bool respawn = false;
 	private Transform[] spawnPoints;
@@ -36,7 +37,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void DropFlare () {
-		// Deploy a flare
-		// Start spawning zombies
+		Instantiate (landingAreaPrefab, transform.position, transform.rotation);
+		// TODO Start spawning zombies
 	}
 }
