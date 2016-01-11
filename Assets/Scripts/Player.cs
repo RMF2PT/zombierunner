@@ -10,6 +10,7 @@ public class Player : MonoBehaviour {
 	private Transform[] spawnPoints;
 	private bool lastRespawnToggle = false;
 
+
 	void Start () {
 		spawnPoints = playerSpawnPoints.GetComponentsInChildren<Transform>();
 	}
