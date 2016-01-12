@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.ImageEffects;
 
 public class Player : MonoBehaviour {
 
 	public Transform playerSpawnPoints; // parent of player spawn points
 	public GameObject landingAreaPrefab;
 
-//	public bool respawn = false;
 	private Transform[] spawnPoints;
-//	private bool lastRespawnToggle = false;
 	private bool foundLandingArea = false;
+	private VignetteAndChromaticAberration vignette;
 
 	void Start () {
 		try {
@@ -17,20 +17,41 @@ public class Player : MonoBehaviour {
 		} catch {
 			Debug.LogError ("Player Spawn Points not answering!");
 		}
+
+		vignette = GetComponentInChildren<VignetteAndChromaticAberration>();
+		vignette.intensity = 1f;
+		StartCoroutine("FadeIn");
 	}
 
-//	void Update () {
-//		if (lastRespawnToggle != respawn) {
-//			Respawn();
-//			respawn = false;
-//		} else {
-//			lastRespawnToggle = respawn;
-//		}
-//	}
+	IEnumerator FadeIn () {
+		for (float intensity = 1f; intensity >= 0.5f; intensity -= 0.005f) {
+			vignette.intensity = intensity;
+			vignette.blur = intensity;
+			yield return null;
+		}
+	}
 
-	private void Respawn () {
-		int i = Random.Range(1, spawnPoints.Length);
-		transform.localPosition = spawnPoints[i].transform.position;
+	IEnumerator FadeOut () {
+		for (float intensity = 0.5f; intensity <= 1f; intensity += 0.01f) {
+			vignette.intensity = intensity;
+			vignette.blur = intensity;
+			yield return null;
+		}
+	}
+
+	void Respawn () {
+		int i = Random.Range (1, spawnPoints.Length);
+		transform.localPosition = spawnPoints [i].transform.position;
+		StartFadeIn ();
+	}
+
+	void StartFadeIn () {
+		StartCoroutine ("FadeIn");
+	}
+
+	IEnumerator Death () {
+		yield return StartCoroutine("FadeOut");
+		Respawn();
 	}
 
 	void DropFlare () {
@@ -46,7 +67,7 @@ public class Player : MonoBehaviour {
 		}
 
 		if (other.tag == "Zombie") {
-			Invoke ("Respawn", 3f);
+			StartCoroutine("Death");
 		}
 	}
 }
