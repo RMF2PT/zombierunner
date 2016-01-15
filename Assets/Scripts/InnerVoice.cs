@@ -15,6 +15,14 @@ public class InnerVoice : MonoBehaviour {
 		audioSource.Play ();
 	}
 
+	void Update () {
+		if (Time.timeScale == 0) {
+			audioSource.Pause();
+		} else {
+			audioSource.UnPause();
+		}
+	}
+
 	void OnNotClearArea () {
 		if (!audioSource.isPlaying) {
 			audioSource.clip = NotAGoodLandingArea;

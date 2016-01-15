@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿//	Add this to MouseLook.cs on LookRotation()
+//	if (Mathf.Abs(Time.timeScale) < float.Epsilon) {
+//		Cursor.visible = true;
+//		return;
+//	}
+
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;

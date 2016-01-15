@@ -12,6 +12,14 @@ public class RadioSystem : MonoBehaviour {
 		audioSource = GetComponent<AudioSource>();
 	}
 
+	void Update () {
+		if (Time.timeScale == 0) {
+			audioSource.Pause();
+		} else {
+			audioSource.UnPause();
+		}
+	}
+
 	void OnMakeInitialHeliCall () {
 		audioSource.clip = initialHeliCall;
 		audioSource.Play ();

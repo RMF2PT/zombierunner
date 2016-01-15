@@ -21,6 +21,11 @@ public class MyThirdPersonController : MonoBehaviour {
 
         void Update () {
         	PlaySounds ();
+			if (Time.timeScale == 0) {
+				audioSource.Pause();
+			} else {
+				audioSource.UnPause();
+			}
         }
  
         public void Move(Vector3 move) {

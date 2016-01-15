@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets.ImageEffects;
-using UnityStandardAssets.Characters.FirstPerson;
 
 public class Player : MonoBehaviour {
 
@@ -11,7 +10,6 @@ public class Player : MonoBehaviour {
 	private Transform[] spawnPoints;
 	private bool foundLandingArea = false;
 	private VignetteAndChromaticAberration vignette;
-//	private FirstPersonController fps;
 
 	void Start () {
 		try {
@@ -23,14 +21,6 @@ public class Player : MonoBehaviour {
 		vignette = GetComponentInChildren<VignetteAndChromaticAberration>();
 		vignette.intensity = 1f;
 		StartCoroutine("FadeIn");
-
-//		fps = GetComponent<FirstPersonController>();
-	}
-
-	void Update () {
-		if (Time.timeScale == 0) {
-			
-		}
 	}
 
 	IEnumerator FadeIn () {
