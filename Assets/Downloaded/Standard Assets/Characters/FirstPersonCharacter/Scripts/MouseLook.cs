@@ -30,6 +30,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         public void LookRotation(Transform character, Transform camera)
         {
+			// This is my addon from HeadBob.cs
+			if (Mathf.Abs(Time.timeScale) < float.Epsilon) {
+				Cursor.visible = true;
+				return;
+			}
+
             float yRot = CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity;
             float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
 

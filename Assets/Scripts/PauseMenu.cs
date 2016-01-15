@@ -11,9 +11,6 @@ public class PauseMenu : MonoBehaviour {
 	public Button restartText;
 	public Button exitText;
 
-	private Player player;
-	private CharacterController playerController;
-
  	void Start () {
 		pauseMenu = pauseMenu.GetComponent<Canvas>();
  		quitMenu = quitMenu.GetComponent<Canvas>();
@@ -21,14 +18,12 @@ public class PauseMenu : MonoBehaviour {
 		restartText = restartText.GetComponent<Button>();
 		exitText = exitText.GetComponent<Button>();
 
-
-
 		pauseMenu.enabled = false;
 		quitMenu.enabled = false;
  	}
 
  	void Update () {
-		if (Input.GetButton("Pause")) {
+		if (Input.GetButton("Cancel")) {
 			pauseMenu.enabled = true;
 			Time.timeScale = 0f;
 		}
