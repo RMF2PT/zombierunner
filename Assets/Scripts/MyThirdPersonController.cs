@@ -32,6 +32,7 @@ public class MyThirdPersonController : MonoBehaviour {
                 move = transform.InverseTransformDirection(move);
                 turnAmount = Mathf.Atan2(move.x, move.z);
                 forwardAmount = move.z;
+				animatorZ1.SetFloat("Speed", move.z);
                 ApplyExtraTurnRotation();
                 turnAmount = Mathf.Atan2(move.x, move.z);
                 UpdateAnimator(move);
@@ -44,9 +45,9 @@ public class MyThirdPersonController : MonoBehaviour {
  
         void UpdateAnimator(Vector3 move) {
                 if (forwardAmount == 0) {
-                        animatorZ1.SetBool ("isWalking", false);
+                	animatorZ1.SetBool ("isWalking", false);
                 } else {
-                        animatorZ1.SetBool ("isWalking", true);
+                	animatorZ1.SetBool ("isWalking", true);
                 }
         }
 

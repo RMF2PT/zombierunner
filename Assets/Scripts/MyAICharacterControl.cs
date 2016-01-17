@@ -31,10 +31,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				Debug.LogWarning("Couldn't find the player Tag");
             }
 
-            if (agent.remainingDistance > agent.stoppingDistance)
+            if (agent.remainingDistance > agent.stoppingDistance) {
                 character.Move(agent.desiredVelocity);
-            else
+            } else {
                 character.Move(Vector3.zero);
+            }
         }
     }
 }

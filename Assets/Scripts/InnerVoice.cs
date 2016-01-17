@@ -8,6 +8,7 @@ public class InnerVoice : MonoBehaviour {
 	public AudioClip NotAGoodLandingArea;
 
 	private AudioSource audioSource;
+	private Vector3 goodLandingAreaPosition;
 
 	void Start () {
 		audioSource = GetComponent<AudioSource>();
@@ -30,7 +31,8 @@ public class InnerVoice : MonoBehaviour {
 		}
 	}
 
-	void OnFindClearArea () {
+	void OnFindClearArea (Vector3 position) {
+		goodLandingAreaPosition = position;
 		if (!audioSource.isPlaying) {
 			audioSource.clip = goodLandingArea;
 			audioSource.Play ();
@@ -39,6 +41,6 @@ public class InnerVoice : MonoBehaviour {
 	}
 
 	void CallHeli () {
-		SendMessageUpwards ("OnMakeInitialHeliCall");
+		SendMessageUpwards ("OnMakeInitialHeliCall", goodLandingAreaPosition);
 	}
 }

@@ -13,23 +13,27 @@ public class RadioSystem : MonoBehaviour {
 	}
 
 	void Update () {
-		if (Time.timeScale == 0) {
+		if (Time.timeScale == 0f) {
 			audioSource.Pause();
 		} else {
 			audioSource.UnPause();
 		}
 	}
 
-	void OnMakeInitialHeliCall () {
+	void OnMakeInitialHeliCall (Vector3 position) {
 		audioSource.clip = initialHeliCall;
 		audioSource.Play ();
-
-		Invoke ("InitialCallReply", initialHeliCall.length + 1f);
+		StartCoroutine ("InitialCallReply", position);
 	}
 
-	void InitialCallReply () {
+	IEnumerator InitialCallReply (Vector3 position) {
+		yield return new WaitForSeconds (initialHeliCall.length + 1f);
 		audioSource.clip = initialCallReply;
 		audioSource.Play ();
-		BroadcastMessage("OnDispatchHelicopter");
+		BroadcastMessage("OnDispatchHelicopter", position);
+	}
+
+	void OnEscaping () {
+		BroadcastMessage("OnFlyOver");
 	}
 }

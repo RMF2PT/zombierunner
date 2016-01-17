@@ -7,6 +7,7 @@ public class Player : MonoBehaviour {
 	public Transform playerSpawnPoints; // parent of player spawn points
 	public GameObject landingAreaPrefab;
 
+	private GameObject helicopter;
 	private Transform[] spawnPoints;
 	private bool foundLandingArea = false;
 	private VignetteAndChromaticAberration vignette;
@@ -16,6 +17,12 @@ public class Player : MonoBehaviour {
 			spawnPoints = playerSpawnPoints.GetComponentsInChildren<Transform>();
 		} catch {
 			Debug.LogError ("Player Spawn Points not answering!");
+		}
+
+		try {
+			helicopter = GameObject.FindGameObjectWithTag("Helicopter");
+		} catch {
+			Debug.LogError ("Can't find the helicopter!");
 		}
 
 		vignette = GetComponentInChildren<VignetteAndChromaticAberration>();
@@ -56,13 +63,20 @@ public class Player : MonoBehaviour {
 
 	void OnTriggerEnter (Collider other) {
 		if (other.tag == "LandingArea" && !foundLandingArea) {
-			BroadcastMessage("OnFindClearArea");
+			BroadcastMessage("OnFindClearArea", other.transform.position);
 			Invoke ("DropFlare", 3f);
 			foundLandingArea = true;
 		}
 
 		if (other.tag == "Zombie") {
 			StartCoroutine("Death");
+		}
+
+		if (other.tag == "Helicopter") {
+			Camera heliCam = helicopter.GetComponentInChildren<Camera>();
+			heliCam.enabled = true;
+			this.enabled = false;
+			SendMessageUpwards("OnEscaping");
 		}
 	}
 }
