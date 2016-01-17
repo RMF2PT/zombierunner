@@ -42,10 +42,6 @@ public class Player : MonoBehaviour {
 	void Respawn () {
 		int i = Random.Range (1, spawnPoints.Length);
 		transform.localPosition = spawnPoints [i].transform.position;
-		StartFadeIn ();
-	}
-
-	void StartFadeIn () {
 		StartCoroutine ("FadeIn");
 	}
 
@@ -56,7 +52,6 @@ public class Player : MonoBehaviour {
 
 	void DropFlare () {
 		Instantiate (landingAreaPrefab, transform.position, transform.rotation);
-		// TODO Start spawning zombies
 	}
 
 	void OnTriggerEnter (Collider other) {

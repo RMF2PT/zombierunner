@@ -52,6 +52,9 @@ public class PauseMenu : MonoBehaviour {
 	public void Continue () {
 		Time.timeScale = 1f;
 		pauseMenu.enabled = false;
+
+		continueText.enabled = false;
+		continueText.enabled = true;
  	}
 
  	public void RestartLevel () {
