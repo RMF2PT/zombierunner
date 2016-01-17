@@ -33,6 +33,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			// This is my addon from HeadBob.cs
 			if (Mathf.Abs(Time.timeScale) < float.Epsilon) {
 				Cursor.visible = true;
+				Cursor.lockState = CursorLockMode.None;
 				return;
 			}
 
