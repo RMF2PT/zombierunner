@@ -49,7 +49,6 @@ public class Helicopter : MonoBehaviour {
 		}
 
 		if (transform.position.z < 1000f && !inInitialMenu && !hasPlayerOnHelicopter) {
-			Debug.Log("moving to area" + landingAreaPosition);
 			if (!hasStartedMovingToArea) {
 				rigiBody.velocity = new Vector3(0, 0, 0);
 				hasStartedMovingToArea = true;
@@ -63,7 +62,6 @@ public class Helicopter : MonoBehaviour {
 	void MoveToLandingArea () {
 		float distCovered = (Time.time - startTime) * speed;
         float fracJourney = distCovered / journeyLength;
-        Debug.Log (distCovered + " " + fracJourney + " " + journeyLength);
         transform.position = Vector3.Lerp(transform.position, landingAreaPosition, fracJourney);
 		if (transform.position.z - 1f > landingAreaPosition.z) {
         	transform.position = new Vector3(transform.position.x, 150f, transform.position.z);
