@@ -3,7 +3,6 @@ using System.Collections;
  
 public class MyThirdPersonController : MonoBehaviour {
  
-
 		public AudioClip[] zombieSounds;
 
         private Animator animatorZ1;

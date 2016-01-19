@@ -17,13 +17,13 @@ public class Eyes : MonoBehaviour {
 	}
 
 	void Update () {
-		if (Input.GetButton("Zoom")) {
+		if (Input.GetButton("Zoom") && Time.timeScale != 0) {
 			eyes.fieldOfView = (defaultFOV / zoom);
 		} else {
 			eyes.fieldOfView = defaultFOV;
 		}
 
-		if(shakeCamera > 0) {
+		if(shakeCamera > 0 && Time.timeScale != 0) {
 			eyes.transform.localPosition = initialCameraPosition + Random.insideUnitSphere;
 			shakeCamera -= Time.deltaTime;
 		}

@@ -11,6 +11,14 @@ public class HeliCrashed : MonoBehaviour {
 	void Start () {
 		audioSource = GetComponent<AudioSource>();
 	}
+
+	void Update () {
+		if (Time.timeScale == 0) {
+			audioSource.Pause();
+		} else {
+			audioSource.UnPause();
+		}
+	}
 	
 	void OnTriggerEnter (Collider other) {
 		if (other.tag == "Player" && !hasExploded) {

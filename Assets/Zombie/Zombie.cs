@@ -3,23 +3,13 @@ using System.Collections;
 
 public class Zombie : MonoBehaviour {
 
+	private float health = 200f;
+	private NavMeshAgent agent;
 	private Animator anim;
 
-	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		anim.SetFloat ("Forward", Input.GetAxis("Vertical"));
-
-		transform.Rotate (Vector3.up * Time.deltaTime * 100f * Input.GetAxis("Horizontal"));
-
-		if (Input.GetButtonDown("Jump")) {
-			anim.SetBool("ZombieDied", true);
-			Invoke ("ZombieDies", 0.01f);
-		}
+		agent = GetComponent<NavMeshAgent>();
 	}
 
 	void ZombieDies () {
@@ -29,5 +19,24 @@ public class Zombie : MonoBehaviour {
 
 	void DestroyZombie () {
 		GameObject.Destroy(gameObject);
+	}
+
+	void ApplyDammage (float damage) {
+		health -= damage;
+		if (health <= 0f) {
+			Die ();
+		}
+	}
+
+	void Die () {
+		agent.speed = 0;
+		int random = Random.Range (1, 3);
+		if (random < 2) {
+			anim.SetTrigger ("ZombieDead");
+		}
+		else {
+			anim.SetTrigger ("ZombieDead2");
+		}
+		Destroy(this); // don't kill the player
 	}
 }

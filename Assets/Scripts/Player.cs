@@ -11,6 +11,7 @@ public class Player : MonoBehaviour {
 	private Transform[] spawnPoints;
 	private bool foundLandingArea = false;
 	private VignetteAndChromaticAberration vignette;
+	private float health = 200f;
 
 	void Start () {
 		try {
@@ -49,12 +50,12 @@ public class Player : MonoBehaviour {
 	void Respawn () {
 		int i = Random.Range (1, spawnPoints.Length);
 		transform.localPosition = spawnPoints [i].transform.position;
-		StartCoroutine ("FadeIn");
 	}
 
 	IEnumerator Death () {
 		yield return StartCoroutine("FadeOut");
 		Respawn();
+		yield return StartCoroutine("FadeIn");
 	}
 
 	void DropFlare () {
@@ -68,15 +69,24 @@ public class Player : MonoBehaviour {
 			foundLandingArea = true;
 		}
 
-		if (other.tag == "Zombie") {
-			StartCoroutine("Death");
-		}
-
-		if (other.tag == "Helicopter") {
+		if (other.GetComponent<Helicopter>()) {
 			Camera heliCam = helicopter.GetComponentInChildren<Camera>();
 			heliCam.enabled = true;
 			this.enabled = false;
 			SendMessageUpwards("OnEscaping");
+		}
+
+		if (other.tag == "Water") {
+			StartCoroutine ("Death");
+		}
+	}
+
+	void OnTriggerStay (Collider other) {
+		if (other.GetComponent<Zombie> ()) {
+			health -= 50f * Time.deltaTime;
+			if (health <= 0f) {
+				StartCoroutine ("Death");
+			}
 		}
 	}
 }
