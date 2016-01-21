@@ -6,8 +6,8 @@ public class Zombie : MonoBehaviour {
 	public bool isDead = false;
 
 	[SerializeField]
-	private float initialHealth = 200f;
-	private float health = 200f;
+	private int initialHealth = 200;
+	private float health = 200;
 	private NavMeshAgent agent;
 	private Animator anim;
 	private Vector3 spawnPosition;
@@ -25,14 +25,14 @@ public class Zombie : MonoBehaviour {
 		Instantiate(this, spawnPosition, initialRotation);
 		health = initialHealth;
 		isDead = false;
-		health = 200f;
+		health = 200;
 		Destroy(this.gameObject, 10f);
 		agent.speed = 0.6f;
 	}
 
-	void ApplyDammage (float damage) {
+	void ApplyDammage (int damage) {
 		health -= damage;
-		if (health <= 0f) {
+		if (health <= 0) {
 			Die ();
 		}
 	}

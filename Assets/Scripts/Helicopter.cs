@@ -95,6 +95,6 @@ public class Helicopter : MonoBehaviour {
 	}
 
 	void GameOver () {
-		SceneManager.LoadScene(0, LoadSceneMode.Single);
+		SceneManager.LoadScene(0);
 	}
 }

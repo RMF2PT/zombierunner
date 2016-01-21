@@ -6,7 +6,7 @@ public class RaycastShooting : MonoBehaviour {
 	public GameObject Effect;
 
 	[SerializeField]
-	private float damage = 50f;
+	private float damage = 50;
 	[SerializeField]
 	private float maxDistance = 100f;
 	private RaycastHit hit;

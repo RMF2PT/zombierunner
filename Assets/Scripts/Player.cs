@@ -9,9 +9,8 @@ public class Player : MonoBehaviour {
 	public GameObject landingAreaPrefab;
 	public float initialHealth = 200f;
 	public float health;
+	public int lives = 3;
 
-	[SerializeField]
-	private int lifes = 3;
 	private GameObject helicopter;
 	private Transform[] spawnPoints;
 	private bool foundLandingArea = false;
@@ -53,22 +52,21 @@ public class Player : MonoBehaviour {
 	}
 
 	IEnumerator Respawn () {
-		while (vignette.intensity <= 0.9f) {
+		while (vignette.intensity <= 0.95f) {
 			yield return null;
 		}
-
-		if (lifes > 0f) {
+		lives--;
+		if (lives > 0) {
 			health = initialHealth;
 			int i = Random.Range (1, spawnPoints.Length);
 			transform.localPosition = spawnPoints [i].transform.position;
 		} else {
-			SceneManager.LoadScene(0);
+			SceneManager.LoadScene(2);
 		}
 		StartCoroutine(FadeIn());
 	}
 
 	void Death () {
-		lifes--;
 		StartCoroutine("FadeOut");
 		StartCoroutine ("Respawn");
 	}
@@ -102,6 +100,7 @@ public class Player : MonoBehaviour {
 		if (other.GetComponent<Zombie> () && health > 0f) {
 			health -= 50f * Time.deltaTime;
 			if (health <= 0f) {
+				health = 0f;
 				Death();
 			}
 		}

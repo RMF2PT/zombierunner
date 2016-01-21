@@ -4,29 +4,41 @@ using System.Collections;
 
 public class PlayersLife : MonoBehaviour {
 
-	public Sprite[] heartImages;
+	public Sprite[] heartSprites;
+	public RawImage[] heartImages;
 
-	private RawImage image;
 	private Player player;
 	private float initialHealth;
+	private float healthDif = 0f;
+	private float healthLastFrame = 0f;
 
 	void Start () {
-		image = GetComponent<RawImage>();
 		player = FindObjectOfType<Player>();
 		initialHealth = player.initialHealth;
 	}
 
 	void Update () {
-		if (player.health == initialHealth) {
-			image.texture = heartImages[0].texture;
+		healthDif = healthLastFrame - player.health;
+
+		if (healthDif != 0) {
+			healthLastFrame = player.health;
+			UpdateHealthImage ();
+		}
+	}
+
+	void UpdateHealthImage () {
+		int i = player.lives - 1; // array starts at 0
+
+		if (player.health >= (initialHealth * 0.95f)) {
+			heartImages [i].texture = heartSprites [0].texture;
 		} else if (player.health > initialHealth * 0.75f) {
-			image.texture = heartImages[1].texture;
+			heartImages [i].texture = heartSprites [1].texture;
 		} else if (player.health > initialHealth * 0.50f) {
-			image.texture = heartImages[2].texture;
+			heartImages [i].texture = heartSprites [2].texture;
 		} else if (player.health > initialHealth * 0.25f) {
-			image.texture = heartImages[3].texture;
+			heartImages [i].texture = heartSprites [3].texture;
 		} else if (player.health <= 0f) {
-			image.texture = heartImages[4].texture;
+			heartImages [i].texture = heartSprites [4].texture;
 		}
 	}
 }
