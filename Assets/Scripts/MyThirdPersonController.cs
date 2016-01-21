@@ -7,6 +7,7 @@ public class MyThirdPersonController : MonoBehaviour {
 
         private Animator animatorZ1;
         private AudioSource audioSource;
+        private Zombie zombie;
  
         float movingTurnSpeed = 360;
         float stationaryTurnSpeed = 180;
@@ -16,6 +17,7 @@ public class MyThirdPersonController : MonoBehaviour {
         void Start () {
                 animatorZ1 = GetComponent<Animator>();
                 audioSource = GetComponent<AudioSource>();
+                zombie = GetComponent<Zombie>();
         }
 
         void Update () {
@@ -51,7 +53,7 @@ public class MyThirdPersonController : MonoBehaviour {
         }
 
 		private void PlaySounds() {
-            if (audioSource.isPlaying) {
+            if (audioSource.isPlaying || zombie.isDead) {
                 return;
             }
 

@@ -1,17 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets.ImageEffects;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
 
 	public Transform playerSpawnPoints; // parent of player spawn points
 	public GameObject landingAreaPrefab;
+	public float initialHealth = 200f;
+	public float health;
 
+	[SerializeField]
+	private int lifes = 3;
 	private GameObject helicopter;
 	private Transform[] spawnPoints;
 	private bool foundLandingArea = false;
 	private VignetteAndChromaticAberration vignette;
-	private float health = 200f;
 
 	void Start () {
 		try {
@@ -29,10 +33,11 @@ public class Player : MonoBehaviour {
 		vignette = GetComponentInChildren<VignetteAndChromaticAberration>();
 		vignette.intensity = 1f;
 		StartCoroutine("FadeIn");
+		health = initialHealth;
 	}
 
 	IEnumerator FadeIn () {
-		for (float intensity = 1f; intensity >= 0.5f; intensity -= 0.005f) {
+		for (float intensity = 1f; intensity >= 0f; intensity -= 0.005f) {
 			vignette.intensity = intensity;
 			vignette.blur = intensity;
 			yield return null;
@@ -40,22 +45,32 @@ public class Player : MonoBehaviour {
 	}
 
 	IEnumerator FadeOut () {
-		for (float intensity = 0.5f; intensity <= 1f; intensity += 0.01f) {
+		for (float intensity = 0.5f; intensity <= 1f; intensity += 0.005f) {
 			vignette.intensity = intensity;
 			vignette.blur = intensity;
 			yield return null;
 		}
 	}
 
-	void Respawn () {
-		int i = Random.Range (1, spawnPoints.Length);
-		transform.localPosition = spawnPoints [i].transform.position;
+	IEnumerator Respawn () {
+		while (vignette.intensity <= 0.9f) {
+			yield return null;
+		}
+
+		if (lifes > 0f) {
+			health = initialHealth;
+			int i = Random.Range (1, spawnPoints.Length);
+			transform.localPosition = spawnPoints [i].transform.position;
+		} else {
+			SceneManager.LoadScene(0);
+		}
+		StartCoroutine(FadeIn());
 	}
 
-	IEnumerator Death () {
-		yield return StartCoroutine("FadeOut");
-		Respawn();
-		yield return StartCoroutine("FadeIn");
+	void Death () {
+		lifes--;
+		StartCoroutine("FadeOut");
+		StartCoroutine ("Respawn");
 	}
 
 	void DropFlare () {
@@ -72,20 +87,22 @@ public class Player : MonoBehaviour {
 		if (other.GetComponent<Helicopter>()) {
 			Camera heliCam = helicopter.GetComponentInChildren<Camera>();
 			heliCam.enabled = true;
-			this.enabled = false;
+			heliCam.Render();
+//			this.enabled = false;
 			SendMessageUpwards("OnEscaping");
 		}
 
-		if (other.tag == "Water") {
-			StartCoroutine ("Death");
+		if (other.tag == "Water" && health > 0f) {
+			health = 0f;
+			Death();
 		}
 	}
 
 	void OnTriggerStay (Collider other) {
-		if (other.GetComponent<Zombie> ()) {
+		if (other.GetComponent<Zombie> () && health > 0f) {
 			health -= 50f * Time.deltaTime;
 			if (health <= 0f) {
-				StartCoroutine ("Death");
+				Death();
 			}
 		}
 	}

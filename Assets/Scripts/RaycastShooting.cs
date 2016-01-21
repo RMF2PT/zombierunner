@@ -3,9 +3,12 @@ using System.Collections;
 
 public class RaycastShooting : MonoBehaviour {
 
-	public Transform Effect;
+	public GameObject Effect;
 
-	private float damage = 100f;
+	[SerializeField]
+	private float damage = 50f;
+	[SerializeField]
+	private float maxDistance = 100f;
 	private RaycastHit hit;
 	private Ray ray;
 
@@ -17,9 +20,9 @@ public class RaycastShooting : MonoBehaviour {
 
 	void FireShot () {
 		ray = Camera.main.ScreenPointToRay (new Vector3 (Screen.width * 0.5f, Screen.height * 0.5f, 0));
-		if (Physics.Raycast (ray, out hit, 100)) {
+		if (Physics.Raycast (ray, out hit, maxDistance)) {
 			Collider target = hit.collider;
-			if (target.tag == "Zombie") {
+			if (target.GetComponent<Zombie>()) {
 				GameObject particleClone = Instantiate (Effect, hit.point, Quaternion.LookRotation (hit.normal)) as GameObject;
 				Destroy (particleClone, 2f);
 				hit.transform.SendMessage ("ApplyDammage", damage, SendMessageOptions.DontRequireReceiver);

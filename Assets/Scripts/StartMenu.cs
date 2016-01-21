@@ -15,6 +15,7 @@ public class StartMenu : MonoBehaviour {
 		exitText = exitText.GetComponent<Button>();
 		quitMenu.enabled = false;
 		Cursor.visible = true;
+		Cursor.lockState = CursorLockMode.None;
  	}
 
  	public void ExitPress () {
