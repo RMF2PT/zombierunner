@@ -10,24 +10,11 @@ public class Zombie : MonoBehaviour {
 	private float health = 200;
 	private NavMeshAgent agent;
 	private Animator anim;
-	private Vector3 spawnPosition;
-	private Quaternion initialRotation;
 
 	void Start () {
 		anim = GetComponent<Animator>();
 		agent = GetComponent<NavMeshAgent>();
-		spawnPosition = transform.position;
-		initialRotation = transform.rotation;
 		health = initialHealth;
-	}
-
-	void DestroyZombie () {
-		Instantiate(this, spawnPosition, initialRotation);
-		health = initialHealth;
-		isDead = false;
-		health = 200;
-		Destroy(this.gameObject, 10f);
-		agent.speed = 0.6f;
 	}
 
 	void ApplyDammage (int damage) {
@@ -47,7 +34,7 @@ public class Zombie : MonoBehaviour {
 		else {
 			anim.SetTrigger ("ZombieDead2");
 		}
-		DestroyZombie();
+		SendMessageUpwards("OnSpawningZombie");
 		Destroy(this); // don't kill the player
 	}
 }
