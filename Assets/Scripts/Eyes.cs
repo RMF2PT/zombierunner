@@ -9,8 +9,10 @@ public class Eyes : MonoBehaviour {
 	private Vector3 initialCameraPosition;
 	private bool hasSeenExplosion = false;
 	private float shakeCamera = 0f;
+	private GameObject helicopterCrashed;
 
 	void Start () {
+		helicopterCrashed = GameObject.FindGameObjectWithTag("HelicopterCrashed");
 		eyes = GetComponent<Camera>();
 		defaultFOV = eyes.fieldOfView;
 		initialCameraPosition = eyes.transform.localPosition;
@@ -30,7 +32,7 @@ public class Eyes : MonoBehaviour {
 	}
 
 	void OnTriggerEnter (Collider other) {
-		if(other.tag == "HelicopterCrashed" && !hasSeenExplosion) {
+		if(other.gameObject == helicopterCrashed && !hasSeenExplosion) {
 			hasSeenExplosion = true;
 			shakeCamera = 1f;
 		}

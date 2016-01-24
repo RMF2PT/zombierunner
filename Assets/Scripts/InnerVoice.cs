@@ -24,13 +24,6 @@ public class InnerVoice : MonoBehaviour {
 		}
 	}
 
-//	void OnNotClearArea () {
-//		if (!audioSource.isPlaying) {
-//			audioSource.clip = NotAGoodLandingArea;
-//			audioSource.Play ();
-//		}
-//	}
-
 	void OnFindClearArea (Vector3 position) {
 		goodLandingAreaPosition = position;
 		if (!audioSource.isPlaying) {

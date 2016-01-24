@@ -11,9 +11,14 @@ public class RaycastShooting : MonoBehaviour {
 	private float maxDistance = 100f;
 	private RaycastHit hit;
 	private Ray ray;
+	private Player player;
+
+	void Start () {
+		player = GetComponentInParent<Player>();
+	}
 
 	void Update () {
-		if (Input.GetButtonDown("Fire1") && Time.timeScale != 0f) {
+		if (Input.GetButtonDown("Fire1") && player.ammo > 0 && Time.timeScale != 0f) {
 			FireShot ();
 		}
 	}

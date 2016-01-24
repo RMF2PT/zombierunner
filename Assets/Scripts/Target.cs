@@ -10,7 +10,6 @@ public class Target : MonoBehaviour {
 	private Image image;
 
 	void Start () {
-		
 		rectTransform = GetComponent<RectTransform>();
 		image = GetComponent<Image>();
 		initialSize = rectTransform.sizeDelta;

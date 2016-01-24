@@ -10,11 +10,13 @@ public class Player : MonoBehaviour {
 	public float initialHealth = 200f;
 	public float health;
 	public int lives = 3;
+	public int ammo;
 
-	private GameObject helicopter;
 	private Transform[] spawnPoints;
 	private bool foundLandingArea = false;
 	private VignetteAndChromaticAberration vignette;
+	private GameObject helicopter;
+	private GameObject water;
 
 	void Start () {
 		try {
@@ -29,10 +31,20 @@ public class Player : MonoBehaviour {
 			Debug.LogError ("Can't find the helicopter!");
 		}
 
+		try {
+			water = GameObject.FindGameObjectWithTag("Water");
+		} catch {
+			Debug.LogError ("Can't find the water!");
+		}
+
+		int i = Random.Range (1, spawnPoints.Length);
+		transform.localPosition = spawnPoints [i].transform.position;
+
 		vignette = GetComponentInChildren<VignetteAndChromaticAberration>();
 		vignette.intensity = 1f;
 		StartCoroutine("FadeIn");
 		health = initialHealth;
+		ammo = 10;
 	}
 
 	IEnumerator FadeIn () {
@@ -82,15 +94,14 @@ public class Player : MonoBehaviour {
 			foundLandingArea = true;
 		}
 
-		if (other.GetComponent<Helicopter>()) {
+		if (other.gameObject == helicopter) {
 			Camera heliCam = helicopter.GetComponentInChildren<Camera>();
 			heliCam.enabled = true;
 			heliCam.Render();
-//			this.enabled = false;
 			SendMessageUpwards("OnEscaping");
 		}
 
-		if (other.tag == "Water" && health > 0f) {
+		if (other.gameObject == water && health > 0f) {
 			health = 0f;
 			Death();
 		}
