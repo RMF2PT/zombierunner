@@ -14,6 +14,7 @@ public class StartMenu : MonoBehaviour {
 	public Button exitText;
 
  	void Start () {
+ 		Screen.SetResolution(1024, 768, false);
  		quitMenu = quitMenu.GetComponent<Canvas>();
 		startText = startText.GetComponent<Button>();
 		controlsText = controlsText.GetComponent<Button>();
