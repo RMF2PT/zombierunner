@@ -7,8 +7,10 @@ public class StartMenu : MonoBehaviour {
 
 	public Canvas quitMenu;
 	public Canvas controlsMenu;
+	public Canvas creditsMenu;
 	public Button startText;
 	public Button controlsText;
+	public Button creditsText;
 	public Button exitText;
 
  	void Start () {
@@ -18,6 +20,7 @@ public class StartMenu : MonoBehaviour {
 		exitText = exitText.GetComponent<Button>();
 		quitMenu.enabled = false;
 		controlsMenu.enabled = false;
+		creditsMenu.enabled = false;
 		Cursor.visible = true;
 		Cursor.lockState = CursorLockMode.None;
  	}
@@ -27,6 +30,7 @@ public class StartMenu : MonoBehaviour {
  		startText.enabled = false;
  		exitText.enabled = false;
  		controlsText.enabled = false;
+		creditsText.enabled = false;
  	}
 
 	public void ControlsPress () {
@@ -34,14 +38,25 @@ public class StartMenu : MonoBehaviour {
  		startText.enabled = false;
  		exitText.enabled = false;
 		controlsText.enabled = false;
+		creditsText.enabled = false;
+ 	}
+
+	public void CreditsPress () {
+		creditsMenu.enabled = true;
+ 		startText.enabled = false;
+ 		exitText.enabled = false;
+		controlsText.enabled = false;
+		creditsText.enabled = false;
  	}
 
 	public void NoPress () {
  		quitMenu.enabled = false;
 		controlsMenu.enabled = false;
+		creditsMenu.enabled = false;
  		startText.enabled = true;
  		exitText.enabled = true;
  		controlsText.enabled = true;
+		creditsText.enabled = true;
  	}
 
  	public void StartLevel () {
