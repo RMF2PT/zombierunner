@@ -8,6 +8,7 @@ public class StartMenu : MonoBehaviour {
 	public Canvas quitMenu;
 	public Canvas controlsMenu;
 	public Canvas creditsMenu;
+	public Canvas creditsMenu2;
 	public Button startText;
 	public Button controlsText;
 	public Button creditsText;
@@ -22,6 +23,7 @@ public class StartMenu : MonoBehaviour {
 		quitMenu.enabled = false;
 		controlsMenu.enabled = false;
 		creditsMenu.enabled = false;
+		creditsMenu2.enabled = false;
 		Cursor.visible = true;
 		Cursor.lockState = CursorLockMode.None;
  	}
@@ -44,6 +46,16 @@ public class StartMenu : MonoBehaviour {
 
 	public void CreditsPress () {
 		creditsMenu.enabled = true;
+		creditsMenu2.enabled = false;
+ 		startText.enabled = false;
+ 		exitText.enabled = false;
+		controlsText.enabled = false;
+		creditsText.enabled = false;
+ 	}
+
+	public void Credits2Press () {
+		creditsMenu2.enabled = true;
+		creditsMenu.enabled = false;
  		startText.enabled = false;
  		exitText.enabled = false;
 		controlsText.enabled = false;
@@ -54,6 +66,7 @@ public class StartMenu : MonoBehaviour {
  		quitMenu.enabled = false;
 		controlsMenu.enabled = false;
 		creditsMenu.enabled = false;
+		creditsMenu2.enabled = false;
  		startText.enabled = true;
  		exitText.enabled = true;
  		controlsText.enabled = true;
